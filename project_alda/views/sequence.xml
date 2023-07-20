@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="seq_projects" model="ir.sequence">
+        <field name="name">Projects</field>
+        <field name="code">project.projects</field>
+        <field name="prefix">PMS-CIC/PROJECT/%(month)s%(y)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_pb" model="ir.sequence">
+        <field name="name">Product Backlog</field>
+        <field name="code">product.backlog</field>
+        <field name="prefix">PMS-CIC/PB/%(month)s%(y)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- <record id="seq_sp" model="ir.sequence">
+        <field name="name">Sprint Planning</field>
+        <field name="code">sprint.planning</field>
+        <field name="prefix">PMS-CIC/SP/%(month)s%(y)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record> -->
+
+
+    <record id="seq_task_no" model="ir.sequence">
+        <field name="name">project.task</field>
+        <field name="code">project.task</field>
+        <field name="suffix">/PMS-CIC/TASK/%(month)s%(y)s</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_mockup_tree" model="ir.ui.view">
+        <field name="name">project.mockup.tree</field>
+        <field name="model">project.mockup</field>
+        <field name="arch" type="xml">
+            <tree string="Project Mockup">
+                <field name="project_no" invisible="1"/>
+                <field name="remark"/>
+                <field name="mockup_doc"/>
+                <field name="url_mockup"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="project_mockup_form" model="ir.ui.view">
+        <field name="name">project.mockup.form</field>
+        <field name="model">project.mockup</field>
+        <field name="arch" type="xml">
+            <form string="Project Mockup">
+                <header>
+                    <button name="button_accepted" string="Accepted" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <!-- <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div> -->
+                    <group>
+                        <field name="is_doc" invisible="1" readonly="1"/>
+                        <field name="is_url" invisible="1" readonly="1"/>
+                        <field name="project_no" readonly="1"/>
+                        <field name="remark" required="1" attrs="{'readonly':[('state', '=', 'acc')]}"/>
+                        <field name="mockup_doc" attrs="{'required' : [('is_url', '!=', True)], 'readonly':[('state', '=', 'acc')]}"/>
+                        <field name="url_mockup" widget="url" attrs="{'required' : [('is_doc', '!=', True)], 'readonly':[('state', '=', 'acc')]}"/>
+                        <field name="attachment_acc" attrs="{'readonly':[('state', '=', 'acc')]}"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="project_mockup_action" model="ir.actions.act_window">
+        <field name="name">Project Mockup</field>
+        <field name="res_model">project.mockup</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="project_projects_search" model="ir.ui.view">
+        <field name="name">project.projects.search</field>
+        <field name="model">project.projects</field>
+        <field name="arch" type="xml">
+            <search string="Projects Search">
+                <group expand="0" string="Group By">
+                    <filter name="group_customer_id" string="Customer" context="{'group_by':'customer_id'}"/>
+                    <filter name="group_pm_id" string="Project Manager" context="{'group_by':'pm_id'}"/>
+                    <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+                </group>
+                
+                <field name="name" />
+                <field name="project_name" />
+                <field name="customer_id" />
+                <field name="pm_id" />
+                <field name="state" />
+            </search>
+        </field>
+    </record>
+
+    <record id="project_projects_tree" model="ir.ui.view">
+        <field name="name">project.projects.tree</field>
+        <field name="model">project.projects</field>
+        <field name="arch" type="xml">
+            <tree string="projects">
+                <field name="name" readonly="1"/>
+                <field name="project_name" readonly="1"/>
+                <field name="customer_id" readonly="1"/>
+                <field name="pm_id" readonly="1"/>
+                <field name="start_pro" readonly="1"/>
+                <field name="end_pro" readonly="1"/>
+                <field name="state" readonly="1" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="project_projects_form" model="ir.ui.view">
+        <field name="name">project.projects.form</field>
+        <field name="model">project.projects</field>
+        <field name="arch" type="xml">
+            <form string="Projects">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+                    <button name="action_blueprint_acc" string="Blueprint Accepted" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                    <button name="action_development" string="Development" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'accept_blu')]}"/>
+                    <button name="action_uat" string="UAT" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'development')]}"/>
+                    <button name="action_done" string="Done" type="object" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'uat')]}"/>
+                    <button name="insert_mockup" string="Insert Mockup" type="object"
+                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}"/>
+                    <button name="insert_pb" string="Product Backlog" type="object"
+                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}"/>
+                    <button name="insert_sp" string="Sprint Planning" type="object"
+                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}"/>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_mockup"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('mockup_count', '=', 0)]}">
+                            <field name="mockup_count" widget="statinfo" string="Mockup"/>
+                        </button>
+                        <button name="view_pb"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('pb_count', '=', 0)]}">
+                            <field name="pb_count" widget="statinfo" string="Product Backlog"/>
+                        </button>
+                        <button name="view_sp"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('sp_count', '=', 0)]}">
+                            <field name="sp_count" widget="statinfo" string="Sprint Planning"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_name" attrs="{'readonly':[('state', '!=', 'draft')], 'required':[('state', '==', 'draft')]}"/>
+                            <label for="start_pro" string="Project Date" attrs="{'readonly':[('state', '!=', 'draft')], 'required':[('state', '!=', 'draft')]}"/>
+                            <div class="o_row">
+                                <field name="start_pro" nolabel="1" class="oe_inline" attrs="{'readonly':[('state', '!=', 'draft')], 'required':[('state', '!=', 'draft')]}"/>
+                                <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow Icon" title="Arrow"/>
+                                <field name="end_pro" nolabel="1" class="oe_inline" attrs="{'readonly':[('state', '!=', 'draft')], 'required':[('state', '!=', 'draft')]}"/>
+                            </div>
+                            <field name="project_charter" attrs="{'readonly':[('state', 'not in', ('draft', 'confirm'))], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="req_gathering" attrs="{'readonly':[('state', 'not in', ('draft', 'confirm'))], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="blueprint" attrs="{'readonly':[('state', 'not in', ('draft', 'confirm'))], 'required':[('state', '!=', 'draft')]}"/>
+                            <!-- <field name="project_mockup" attrs="{'readonly':[('state', 'not in', ('draft', 'confirm', 'accept_blu', 'development'))], 'required':[('state', 'not in', ('draft', 'confirm'))]}"/> -->
+                        </group>
+                        <group>
+                            <field name="customer_id" attrs="{'readonly':[('state', '!=', 'draft')], 'required':[('state', '==', 'draft')]}"/>
+                            <field name="customer_pic_id" attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="pm_id" attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="sa_id" attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="tl_id" attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="team_id" widget="many2many_tags"  attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
+                            <field name="notes" attrs="{'readonly':[('state', '=', 'done')]}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="project_projects_action" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">project.projects</field>
+        <field name="search_view_id" ref="project_projects_search"/>
+        <field name="view_id" ref="project_projects_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="project_alda_menu"
+        name="Projects"
+        action="project_projects_action"
+        parent="project.menu_main_pm"
+        sequence="1"/>
+</odoo>

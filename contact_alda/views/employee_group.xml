@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="jidoka_employee_group_view_tree" model="ir.ui.view">
+        <field name="name">jidoka.employee.group.view.tree</field>
+        <field name="model">jidoka.employee.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="leader_id"/>
+                <field name="spv_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="jidoka_employee_group_view_form" model="ir.ui.view">
+        <field name="name">jidoka.employee.group.view.form</field>
+        <field name="model">jidoka.employee.group</field>
+        <field name="arch" type="xml">
+            <form string="Caption" create="true" delete="true" edit="true">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="Group Name..." /></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="leader_id"/>
+                            <field name="spv_id"/>
+                        </group>
+                        <div class="mt8">
+                            <button name="add_employee_to_group_wiz" string="Add Employee To Group" type="object" class="oe_highlight" icon="fa-plus"/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page name="employees" string="Employees">
+                            <field name="employee_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="department_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+
+    <record id="jidoka_employee_group_action" model="ir.actions.act_window">
+        <field name="name">Employee Group</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">jidoka.employee.group</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                <!-- Add Text Here -->
+            </p><p>
+                <!-- More details about what a user can do with this object will be OK --> 
+            
+            </p>
+        </field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="jidoka_employee_group_menu_act" name="Employee Groups" parent="hr.menu_hr_employee_payroll" action="jidoka_employee_group_action" sequence="2"/>
+
+</odoo>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_backlog_search" model="ir.ui.view">
+        <field name="name">product.backlog.search</field>
+        <field name="model">product.backlog</field>
+        <field name="arch" type="xml">
+            <search string="Product Backlog Search">
+                <group expand="0" string="Group By">
+                    <filter name="group_customer_id" string="Customer"
+                        context="{'group_by':'customer_id'}" />
+                    <filter name="group_project_no" string="Project No."
+                        context="{'group_by':'project_no'}" />
+                    <filter name="group_project_name" string="Project Name."
+                        context="{'group_by':'project_name'}" />
+                    <filter name="group_priority" string="Priority" context="{'group_by':'priority'}" />
+                </group>
+
+                <field name="name" />
+                <field name="pb_name" />
+                <field name="project_no" />
+                <field name="project_name" />
+                <field name="customer_id" />
+                <field name="priority" />
+            </search>
+        </field>
+    </record>
+
+    <record id="product_backlog_tree" model="ir.ui.view">
+        <field name="name">product.backlog.tree</field>
+        <field name="model">product.backlog</field>
+        <field name="arch" type="xml">
+            <tree string="Product Backlog">
+                <field name="name" readonly="1" />
+                <field name="project_name" readonly="1" />
+                <field name="pb_name" readonly="1" />
+                <field name="wd_plan" readonly="1" />
+                <field name="priority" readonly="1" widget="badge"/>
+                <field name="progress" readonly="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_backlog_form" model="ir.ui.view">
+        <field name="name">product.backlog.form</field>
+        <field name="model">product.backlog</field>
+        <field name="arch" type="xml">
+            <form string="Product Backlog">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}" />
+                        <button name="insert_sb" string="Sprint Backlog" type="object"
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}" />
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="view_sb"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('sb_count', '=', 0)]}">
+                            <field name="sb_count" widget="statinfo" string="Sprint Backlog" />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="project_no" attrs="{'readonly': ['|',('state', '!=', 'draft'),('is_auto', '=', True)], 'required':[('state', 'in', ('draft'))]}"/>
+                        <field name="project_name" attrs="{'readonly': ['|',('state', '!=', 'draft'),('is_auto', '=', True)], 'required':[('state', 'in', ('draft'))]}"/>
+                        <field name="customer_id" attrs="{'readonly': ['|',('state', '!=', 'draft'),('is_auto', '=', True)], 'required':[('state', 'in', ('draft'))]}"/>
+                        <field name="pb_name" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1"/>
+                        <field name="description" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <field name="priority" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="wd_plan" string="Work Duration Plan" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <div class="o_row">
+                            <field name="wd_plan" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="wd_time" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </div>
+                        <label for="progress" string="Progress" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <div class="o_row">
+                            <field name="progress" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="persen" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </div>
+                        <field name="is_auto" readonly="1" invisible="1"/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_backlog_action" model="ir.actions.act_window">
+        <field name="name">Product Backlog</field>
+        <field name="res_model">product.backlog</field>
+        <field name="search_view_id" ref="product_backlog_search" />
+        <field name="view_id" ref="product_backlog_tree" />
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="product_backlog_menu"
+        name="Product Backlog"
+        action="product_backlog_action"
+        parent="project.menu_main_pm"
+        sequence="3" />
+
+</odoo>

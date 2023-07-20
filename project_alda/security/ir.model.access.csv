@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_mockup_user,project_alda.project.mockup,model_project_mockup,base.group_user,1,1,1,1
+access_project_projects_user,project_alda.project.projects,model_project_projects,base.group_user,1,1,1,1
+access_product_backlog_user,project_alda.product.backlog,model_product_backlog,base.group_user,1,1,1,1
+access_sprint_planning_user,project_alda.sprint.planning,model_sprint_planning,base.group_user,1,1,1,1
+access_sprint_evaluating_user,project_alda.sprint.evaluating,model_sprint_evaluating,base.group_user,1,1,1,1

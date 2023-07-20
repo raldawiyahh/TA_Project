@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_jidoka_employee_group_user,jidoka_employee_group.jidoka.employee.group,model_jidoka_employee_group,base.group_user,1,1,1,1
+access_jidoka_employee_group_wiz_user,jidoka_employee_group.jidoka.employee.group.wiz,model_jidoka_employee_group_wiz,base.group_user,1,1,1,1
