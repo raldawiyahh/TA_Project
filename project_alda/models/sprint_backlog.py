@@ -13,7 +13,7 @@ class SprintBacklog(models.Model):
     # task_title = fields.Char(string="Task Title", required=True)
     task_description = fields.Char(string="Task Description")
     modul = fields.Char(string="Modul")
-    sprint_id = fields.Char('sprint.planning')
+    # sprint_id = fields.Char('sprint.planning')
     sprint_to = fields.Char(string="Sprint To-", related="sprint_id.sprint_to")
     end_sprint = fields.Date(string="Sprint Deadline", related="sprint_id.end_sprint")
     task_deadline = fields.Date(string="Task Deadline")
