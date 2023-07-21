@@ -32,4 +32,33 @@
         <field name="suffix">/PMS-CIC/TASK/%(month)s%(y)s</field>
         <field name="padding">4</field>
     </record>
+
+
+    <!-- Gunakan ID menu item yang ingin Anda sembunyikan -->
+    <record id="project.menu_project_config" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.menu_project_management" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.menu_projects" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.menu_projects_group_stage" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.menu_projects_config" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.menu_projects_config_group_stage" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.menu_project_report_task_analysis" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+    <record id="project.rating_rating_menu_project" model="ir.ui.menu">
+        <field name="active">False</field>
+    </record>
+
+    
 </odoo>
