@@ -3,7 +3,6 @@ from odoo.exceptions import UserError, ValidationError
 
 class ProjectMockup(models.Model):
     _name = 'project.mockup'
-    _inherit = 'mail.thread'
     _description = 'Mockup'
 
     name = fields.Char(string="Name")

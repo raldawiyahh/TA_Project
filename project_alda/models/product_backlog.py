@@ -39,30 +39,30 @@ class ProductBacklog(models.Model):
             'name': 'Sprint Backlog',
             'view_type': 'form',
             'view_mode': 'form',
-            'res_model': 'project.task',
+            'res_model': 'sprint.backlog',
             'type': 'ir.actions.act_window',
             'target': 'current',
             'context': {
-                'default_project_id': self.id,
+                'default_project_id': self.project_no.id,
                 'default_project_name': self.project_name,
-                'default_customer_id': self.customer_id.id,
-                'default_pb_no': self.id,
+                'default_pb_id': self.id,
                 'default_pb_name': self.pb_name,
+                'default_customer_id': self.customer_id.id,
             },
         }
     
     def _compute_sb_count(self):
         for record in self:
-            record.sb_count = self.env['project.task'].search_count(
-                [('pb_no', '=', self.id)])
+            record.sb_count = self.env['sprint.backlog'].search_count(
+                [('pb_id', '=', self.id)])
 
     def view_sb(self):
         return {
             'name': 'Sprint Backlog',
             'view_type': 'tree',
             'view_mode': 'tree,form',
-            'res_model': 'project.task',
+            'res_model': 'sprint.backlog',
             'type': 'ir.actions.act_window',
-            'domain':[('pb_no', '=', self.id)],
+            'domain':[('pb_id', '=', self.id)],
             'context': "{'create': False,'edit':True,'delete':True}"
         }

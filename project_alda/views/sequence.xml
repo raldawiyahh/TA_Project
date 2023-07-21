@@ -27,8 +27,8 @@
 
 
     <record id="seq_task_no" model="ir.sequence">
-        <field name="name">project.task</field>
-        <field name="code">project.task</field>
+        <field name="name">sprint.backlog</field>
+        <field name="code">sprint.backlog</field>
         <field name="suffix">/PMS-CIC/TASK/%(month)s%(y)s</field>
         <field name="padding">4</field>
     </record>

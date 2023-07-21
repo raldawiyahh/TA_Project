@@ -4,3 +4,4 @@ access_project_projects_user,project_alda.project.projects,model_project_project
 access_product_backlog_user,project_alda.product.backlog,model_product_backlog,base.group_user,1,1,1,1
 access_sprint_planning_user,project_alda.sprint.planning,model_sprint_planning,base.group_user,1,1,1,1
 access_sprint_evaluating_user,project_alda.sprint.evaluating,model_sprint_evaluating,base.group_user,1,1,1,1
+access_sprint_backlog_user,project_alda.sprint.backlog,model_sprint_backlog,base.group_user,1,1,1,1
