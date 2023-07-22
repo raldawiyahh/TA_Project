@@ -56,7 +56,6 @@
                 <field name="sprint_id"/>
                 <field name="task_title"/>
                 <field name="color"/>
-                <field name="state_sequence" invisible="1"/>
                 <field name="state2"/>
                 <progressbar field="state2" colors='{"4": "success", "3":"warning", "2":"blue"}'/>
                 <templates>
@@ -157,9 +156,9 @@
                     </div>
                     <group>
                         <group>
-                            <field name="customer_id" attrs="{'readonly':['|',('is_auto', '=', True), ('state', '!=', 'draft')]}" required="1"/>
                             <field name="project_id" attrs="{'readonly':['|',('is_auto', '=', True), ('state', '!=', 'draft')]}" required="1"/>
                             <field name="project_name" attrs="{'readonly':['|',('is_auto', '=', True), ('state', '!=', 'draft')]}" required="1"/>
+                            <field name="customer_id" attrs="{'readonly':['|',('is_auto', '=', True), ('state', '!=', 'draft')]}" required="1"/>
                             <field name="pb_id" attrs="{'readonly':['|',('is_auto', '=', True), ('state', '!=', 'draft')]}" required="1"/>
                             <field name="pb_name" attrs="{'readonly':['|',('is_auto', '=', True), ('state', '!=', 'draft')]}" required="1"/>
                             <field name="task_title" attrs="{'readonly':[('state', '!=', 'draft')]}" required="1"/>

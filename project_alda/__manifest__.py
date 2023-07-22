@@ -5,6 +5,7 @@
     
     'depends': [
         'project',
+        'hr',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -14,6 +15,7 @@
         'views/sprint_planning.xml',
         'views/sprint_evaluating.xml',
         'views/sprint_backlog.xml',
+        'wizard/task_filter.xml',
     ],
     'installable': True,
     'auto_install': False,

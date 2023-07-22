@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="task_filter_wizard" model="ir.ui.view">
+            <field name="name">task.wizard.form</field>
+            <field name="model">task.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Task Filter">
+                    <group>
+                        <group>
+                            <field name="is_all_project"/>
+                            <field name="project_name_id" attrs="{'required':[('is_all_project', '=', False)], 'invisible':[('is_all_project', '=', True)]}"/>
+                            <field name="employee_ids" widget="many2many_tags"/>
+                            <!-- <field name="department_ids" widget="many2many_tags" groups="jidoka_ktsi_leave.group_leave_manager"/> -->
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="show_task_line" type="object" string="Show" class="btn-primary" />
+                        <button special="cancel" string="Cancel" type="object" class="btn-primary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Wizard Action -->
+        <record id="action_task_filter_wizard" model="ir.actions.act_window">
+            <field name="name">Task Filter</field>
+            <field name="res_model">task.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_task_filter_wizard" name="My Task" 
+            parent="project.menu_main_pm" action="action_task_filter_wizard" sequence="6"/>
+    </data>
+</odoo>

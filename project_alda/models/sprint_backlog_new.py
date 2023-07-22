@@ -11,12 +11,12 @@ class SprintBacklog(models.Model):
     task_title = fields.Char(string="Task Title", tracking=True)
     task_description = fields.Text(string="Task Description", tracking=True)
     project_id = fields.Many2one('project.projects', string="Project No.", tracking=True)
-    project_name = fields.Char(string="Project Name", tracking=True)
-    pb_id = fields.Many2one('product.backlog', string="Product Backlog No.", tracking=True)
-    pb_name = fields.Char(string="Product Backlog Name", tracking=True)
-    customer_id = fields.Many2one('res.users', string="Customer")
+    project_name = fields.Char(string="Project Name", tracking=True, related="project_id.project_name")
+    pb_id = fields.Many2one('product.backlog', string="Product Backlog No.", tracking=True, domain="[('project_no', '=', project_id)]")
+    pb_name = fields.Char(string="Product Backlog Name", tracking=True, related="pb_id.pb_name")
+    customer_id = fields.Many2one('res.users', string="Customer", related="project_id.customer_id")
     modul = fields.Char(string="Modul", tracking=True)
-    sprint_id = fields.Many2one('sprint.planning', string="Sprint Name", tracking=True)
+    sprint_id = fields.Many2one('sprint.planning', string="Sprint Name", tracking=True, domain="[('project_id', '=', project_id)]")
     sprint_deadline = fields.Date(string="Sprint Deadline", tracking=True, related="sprint_id.end_sprint")
     task_deadline = fields.Date(string="Task Deadline", tracking=True)
     level_difficulty = fields.Selection([('low', 'Low'), ('medium', 'Medium'), ('height', 'Height')], string="Level Of Difficulty", tracking=True)
@@ -25,7 +25,6 @@ class SprintBacklog(models.Model):
     calculate_date = fields.Date(string="Calculate Date")
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm'), ('delivered', 'Delivered'), ('progress', 'On Progress'), ('ready_check', 'Ready To Check'), ('qc', 'QC'), ('need_fix', 'Need Fix'), ('done', 'Done'), ('cancel', 'Cancel')], string="State", tracking=True, default='draft')
     state2= fields.Selection([('1', 'Preparation'), ('2', 'On Progress'), ('3', 'check'), ('4', 'Done')], string="State2", default='1')
-    # color = fields.Integer(string='Color Index')
     is_auto = fields.Boolean(string="Is Auto")
     submission_date = fields.Date(string="Submission Date")
     color = fields.Selection([
@@ -36,25 +35,6 @@ class SprintBacklog(models.Model):
             # Add more colors as needed
         ], string='Color', default='blue')
 
-    state_sequence = fields.Integer(string='State Sequence', compute='_compute_state_sequence', store=True)
-    
-
-    @api.depends('state')
-    def _compute_state_sequence(self):
-        # Definisikan urutan state sesuai dengan keinginan Anda
-        state_sequence_order = {
-            'draft': 1,
-            'confirm': 2,
-            'delivered':3,
-            'progress':4,
-            'ready_check':5,
-            'qc':6,
-            'need_fix':7,
-            'done':8,
-            'cancel':9,
-        }
-        for record in self:
-            record.state_sequence = state_sequence_order.get(record.state, 0)
 
     @api.model_create_multi
     def create(self, vals_list):
