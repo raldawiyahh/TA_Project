@@ -48,6 +48,7 @@ class ProductBacklog(models.Model):
                 'default_pb_id': self.id,
                 'default_pb_name': self.pb_name,
                 'default_customer_id': self.customer_id.id,
+                'default_is_auto': True,
             },
         }
     

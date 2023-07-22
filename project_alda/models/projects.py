@@ -54,7 +54,14 @@ class ProjectProjects(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm'), ('accept_blu', 'Blueprint Accepted'), ('development', 'Development'), ('uat', 'UAT'), ('done', 'Done')], string="State", default='draft')
     mockup_count = fields.Integer(string="Mockup Count", compute="_compute_mockup_count")
     pb_count = fields.Integer(string="Product Backlog Count", compute="_compute_pb_count")
-    sp_count = fields.Integer(string="Sprint Planning Count", compute="_compute_sp_count")
+    sp_count = fields.Integer(string="Sprint Planning Count", compute="_compute_sp_count")  
+    color = fields.Selection([
+            ('red', 'Red'),
+            ('blue', 'Blue'),
+            ('green', 'Green'),
+            ('yellow', 'Yellow'),
+            # Add more colors as needed
+        ], string='Color', default='blue')
 
     @api.model_create_multi
     def create(self, vals_list):
