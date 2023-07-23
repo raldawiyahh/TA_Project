@@ -71,7 +71,10 @@ class ProjectProjects(models.Model):
         return super(ProjectProjects, self).create(vals_list)
     
     def action_confirm(self):
-        self.state='confirm'
+        if self.start_pro > self.end_pro:
+            raise UserError(_("Start Project cannot be bigger than End Project"))
+        else :
+            self.state='confirm'
 
     def action_blueprint_acc(self):
         self.state='accept_blu'

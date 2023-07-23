@@ -36,6 +36,8 @@ class SprintPlanning(models.Model):
         duplicates = self.search([('id', '!=', self.id), ('project_name', '=', self.project_name), ('sprint_to', '=', self.sprint_to)])
         if duplicates:
             raise ValidationError("This project on the same 'Sprint To' is already exist!")
+        elif self.start_sprint > self.end_sprint:
+            raise UserError(_("Start Sprint cannot be bigger than End Sprint")) :
         else :
             self.state='confirm'
 

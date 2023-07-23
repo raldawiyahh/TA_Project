@@ -27,7 +27,9 @@ class SprintBacklog(models.Model):
     state2= fields.Selection([('1', 'Preparation'), ('2', 'On Progress'), ('3', 'check'), ('4', 'Done')], string="State2", default='1')
     is_auto = fields.Boolean(string="Is Auto")
     submission_date = fields.Date(string="Submission Date")
+    task_duration = fields.Integer(string="Task Duration")
     user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
+    # duration = fields.Integer(string="Duration", compute="calculate_priority")
     color = fields.Selection([
             ('red', 'Red'),
             ('blue', 'Blue'),
@@ -35,7 +37,7 @@ class SprintBacklog(models.Model):
             ('yellow', 'Yellow'),
             # Add more colors as needed
         ], string='Color', default='blue')
-
+    is_calculate = fields.Boolean("is_calculate")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -44,8 +46,11 @@ class SprintBacklog(models.Model):
         return super(SprintBacklog, self).create(vals_list)
 
     def button_confirm(self):
-        self.state = 'confirm'
-        self.state2 = '1'
+        if self.task_deadline > self.sprint_deadline:
+            raise UserError(_("Task Deadline cannot be bigger than Sprint Deadline"))
+        else :
+            self.state = 'confirm'
+            self.state2 = '1'
 
     def button_delivered(self):
         self.state = 'delivered'
@@ -77,3 +82,19 @@ class SprintBacklog(models.Model):
     def button_cancel(self):
         self.state = 'cancel'
         self.state2 = '1'
+
+
+    def calculate_priority(self):
+        for task in self:
+            task.is_calculate = True
+            asia_tz_2 = pytz.timezone('Asia/Jakarta')
+            today_date = datetime.now(asia_tz_2).date()
+            task.calculate_date = today_date
+            # Hitung selisih antara task_deadline dan calculate_date
+            delta = task.task_deadline - task.calculate_date
+
+            # Konversi selisih menjadi integer
+            duration = delta.days
+
+            task_priority = (task.task_duration + duration)/duration
+            task.task_priority = task_priority
