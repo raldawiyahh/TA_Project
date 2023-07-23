@@ -43,7 +43,7 @@
             <form string="Sprint Evaluating">
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="btn-primary"
-                        attrs="{'invisible': [('state', '!=', 'draft')]}" />
+                        attrs="{'invisible': [('state', '!=', 'draft')]}" groups="project_alda.group_sprint_evaluating_pm"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -88,6 +88,7 @@
         <field name="search_view_id" ref="sprint_evaluating_search" />
         <field name="view_id" ref="sprint_evaluating_tree" />
         <field name="view_mode">tree,form</field>
+        <field name="context">{"create": False, "edit": False, "delete": False}</field>
     </record>
 
     <menuitem

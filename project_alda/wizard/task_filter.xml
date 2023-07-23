@@ -10,8 +10,7 @@
                         <group>
                             <field name="is_all_project"/>
                             <field name="project_name_id" attrs="{'required':[('is_all_project', '=', False)], 'invisible':[('is_all_project', '=', True)]}"/>
-                            <field name="employee_ids" widget="many2many_tags"/>
-                            <!-- <field name="department_ids" widget="many2many_tags" groups="jidoka_ktsi_leave.group_leave_manager"/> -->
+                            <field name="employee_ids" widget="many2many_tags" groups="project_alda.group_project_pm"/>
                         </group>
                     </group>
                     <footer>
@@ -31,6 +30,10 @@
         </record>
 
         <menuitem id="menu_task_filter_wizard" name="My Task" 
-            parent="project.menu_main_pm" action="action_task_filter_wizard" sequence="6"/>
+            parent="project.menu_main_pm" action="action_task_filter_wizard" sequence="6" groups="project_alda.group_project_dev"/>
+
+        <menuitem id="menu_task_filter_wizard" name="Task Manager" 
+            parent="project.menu_main_pm" action="action_task_filter_wizard" sequence="6" groups="project_alda.group_project_pm"/>
+            
     </data>
 </odoo>

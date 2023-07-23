@@ -27,6 +27,7 @@ class SprintBacklog(models.Model):
     state2= fields.Selection([('1', 'Preparation'), ('2', 'On Progress'), ('3', 'check'), ('4', 'Done')], string="State2", default='1')
     is_auto = fields.Boolean(string="Is Auto")
     submission_date = fields.Date(string="Submission Date")
+    user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
     color = fields.Selection([
             ('red', 'Red'),
             ('blue', 'Blue'),

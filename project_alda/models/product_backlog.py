@@ -21,6 +21,7 @@ class ProductBacklog(models.Model):
     state = fields.Selection([('draft', 'Draft'), ('confirm', 'Confirm')], string="State", default='draft')
     is_auto = fields.Boolean(string="Is Auto", default=False)
     sb_count = fields.Integer(string="Sprint Backlog Count", compute="_compute_sb_count")
+    user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
 
     @api.model_create_multi
     def create(self, vals_list):

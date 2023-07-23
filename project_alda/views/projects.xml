@@ -155,22 +155,22 @@
             <form string="Projects">
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+                            attrs="{'invisible': [('state', 'not in', ('draft'))]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="action_blueprint_acc" string="Blueprint Accepted" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="action_development" string="Development" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'accept_blu')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'accept_blu')]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="action_uat" string="UAT" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'development')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'development')]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="action_done" string="Done" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'uat')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'uat')]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="insert_mockup" string="Insert Mockup" type="object"
-                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}"/>
+                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="insert_pb" string="Product Backlog" type="object"
-                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}"/>
+                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}" groups="project_alda.group_project_projects_pm"/>
                     <button name="insert_sp" string="Sprint Planning" type="object"
-                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}"/>
-                    <field name="state" widget="statusbar" />
+                            attrs="{'invisible': [('state', 'not in', ('confirm', 'accept_blu', 'development'))]}" groups="project_alda.group_project_projects_pm"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -240,6 +240,16 @@
         <field name="search_view_id" ref="project_projects_search"/>
         <field name="view_id" ref="project_projects_kanban"/>
         <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"create": True, "edit": True, "delete": True}</field>
+    </record>
+
+    <record id="project_projects_action_view" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">project.projects</field>
+        <field name="search_view_id" ref="project_projects_search"/>
+        <field name="view_id" ref="project_projects_kanban"/>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"create": False, "edit": False, "delete": False}</field>
     </record>
 
     <menuitem
@@ -247,5 +257,18 @@
         name="Projects"
         action="project_projects_action"
         parent="project.menu_main_pm"
-        sequence="1"/>
+        sequence="1"
+        groups="project_alda.group_project_projects_pm"
+        />
+
+    <menuitem
+        id="project_alda_menu_view"
+        name="Projects"
+        action="project_projects_action_view"
+        parent="project.menu_main_pm"
+        sequence="1"
+        groups="project_alda.group_project_projects_dev"
+        />
+
+    
 </odoo>

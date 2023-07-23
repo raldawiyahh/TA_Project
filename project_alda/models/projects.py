@@ -55,6 +55,7 @@ class ProjectProjects(models.Model):
     mockup_count = fields.Integer(string="Mockup Count", compute="_compute_mockup_count")
     pb_count = fields.Integer(string="Product Backlog Count", compute="_compute_pb_count")
     sp_count = fields.Integer(string="Sprint Planning Count", compute="_compute_sp_count")  
+    user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
     color = fields.Selection([
             ('red', 'Red'),
             ('blue', 'Blue'),

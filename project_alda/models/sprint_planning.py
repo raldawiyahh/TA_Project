@@ -20,6 +20,7 @@ class SprintPlanning(models.Model):
     is_se = fields.Boolean(string="Is Sprint Evaluating", default=False)
     se_count = fields.Integer(string="SE Count", compute="_compute_se_count")
     reality_finished = fields.Date(string="Reality Finished")
+    user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
 
     # @api.model_create_multi
     # def create(self, vals_list):

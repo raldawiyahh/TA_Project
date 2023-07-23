@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+	<!-- PARENT GROUP -->
+	<record id="group_pm" model="res.groups">
+		<field name="name">1 Project Manager</field>
+		<field name="implied_ids" eval="[(4, ref('project_alda.group_project_projects_pm')), (4, ref('project_alda.group_sprint_planning_pm')), (4, ref('project_alda.group_sprint_evaluating_pm')), (4, ref('project_alda.group_product_backlog_pm')), (4, ref('project_alda.group_project_pm'))]"/>
+	</record>
+	
+	<record id="group_lead" model="res.groups">
+		<field name="name">2 Lead</field>
+		<field name="implied_ids" eval="[(4, ref('project_alda.group_project_projects_dev')), (4, ref('project_alda.group_sprint_planning_dev')), (4, ref('project_alda.group_product_backlog_lead')), (4, ref('project_alda.group_project_pm'))]"/>
+	</record>
+
+	<record id="group_dev" model="res.groups">
+		<field name="name">3 Developer</field>
+		<field name="implied_ids" eval="[(4, ref('project_alda.group_project_projects_dev')), (4, ref('project_alda.group_sprint_planning_dev')), (4, ref('project_alda.group_product_backlog_dev')), (4, ref('project_alda.group_project_dev'))]"/>
+	</record>
+
+	<record id="group_qc" model="res.groups">
+		<field name="name">4 Quality Control</field>
+		<field name="implied_ids" eval="[(4, ref('project_alda.group_project_projects_dev')), (4, ref('project_alda.group_sprint_planning_dev')), (4, ref('project_alda.group_product_backlog_dev')), (4, ref('project_alda.group_project_qc'))]"/>
+	</record>
+	
+	<!-- group pm project_projects -->
+    <record id="group_project_projects_pm" model="res.groups">
+		<field name="name">5a Project PM</field>
+	</record>
+	
+    <record id="project_projects_rule_group_pm" model="ir.rule"> 
+		<field name="name">5a Project PM</field> 
+		<field name="model_id" ref="model_project_projects" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_project_projects_pm'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group selain pm project_projects -->
+    <record id="group_project_projects_dev" model="res.groups">
+		<field name="name">5b Project Lead / Developer / QC</field>
+	</record>
+	
+    <record id="project_projects_rule_group_dev" model="ir.rule"> 
+		<field name="name">5b Project  Lead / Developer / QC</field> 
+		<field name="model_id" ref="model_project_projects" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_project_projects_dev'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	
+	<!-- group pm sprint_planning -->
+    <record id="group_sprint_planning_pm" model="res.groups">
+		<field name="name">6a Sprint PM</field>
+	</record>
+	
+    <record id="sprint_planning_rule_group_pm" model="ir.rule"> 
+		<field name="name">6a Sprint PM</field> 
+		<field name="model_id" ref="model_sprint_planning" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_sprint_planning_pm'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group selain pm sprint_planning -->
+    <record id="group_sprint_planning_dev" model="res.groups">
+		<field name="name">6b Sprint Lead / Developer / QC</field>
+	</record>
+	
+    <record id="sprint_planning_rule_group_dev" model="ir.rule"> 
+		<field name="name">6b Sprint Lead / Developer / QC</field> 
+		<field name="model_id" ref="model_sprint_planning" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_sprint_planning_dev'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group pm sprint_evaluating -->
+    <record id="group_sprint_evaluating_pm" model="res.groups">
+		<field name="name">7a Sprint Evaluating PM</field>
+	</record>
+	
+    <record id="sprint_evaluating_rule_group_pm" model="ir.rule"> 
+		<field name="name">7a Sprint Evaluating PM</field> 
+		<field name="model_id" ref="model_sprint_evaluating" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_sprint_evaluating_pm'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+
+	<!-- group pm product_backlog -->
+    <record id="group_product_backlog_pm" model="res.groups">
+		<field name="name">8a Product Backlog PM</field>
+	</record>
+	
+    <record id="product_backlog_rule_group_pm" model="ir.rule"> 
+		<field name="name">8a Product Backlog PM</field> 
+		<field name="model_id" ref="model_product_backlog" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_product_backlog_pm'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group lead product_backlog -->
+    <record id="group_product_backlog_lead" model="res.groups">
+		<field name="name">8b Product Backlog Lead</field>
+	</record>
+	
+    <record id="product_backlog_rule_group_lead" model="ir.rule"> 
+		<field name="name">8b Product Backlog Lead</field> 
+		<field name="model_id" ref="model_product_backlog" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_product_backlog_lead'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group  dan qc product_backlog -->
+    <record id="group_product_backlog_dev" model="res.groups">
+		<field name="name">8c Product Backlog Developer / QC</field>
+	</record>
+	
+    <record id="product_backlog_rule_group_dev" model="ir.rule"> 
+		<field name="name">8c Product Backlog Developer / QC</field> 
+		<field name="model_id" ref="model_product_backlog" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_product_backlog_dev'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+
+	<!-- group pm sprint backlog -->
+    <record id="group_project_pm" model="res.groups">
+		<field name="name">9a Backlog PM / Lead Developer</field>
+	</record>
+	
+    <record id="project_rule_group_pm" model="ir.rule"> 
+		<field name="name">9a Backlog PM / Lead Developer</field> 
+		<field name="model_id" ref="model_sprint_backlog" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_project_pm'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group dev sprint backlog -->
+	<record id="group_project_dev" model="res.groups">
+		<field name="name">9b Backlog Developer</field>
+	</record>
+
+    <record id="project_rule_group_dev" model="ir.rule"> 
+		<field name="name">9b Backlog Developer</field> 
+		<field name="model_id" ref="model_sprint_backlog" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_project_dev'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+	<!-- group qc sprint backlog -->
+	<record id="group_project_qc" model="res.groups">
+		<field name="name">9c Backlog QC</field>
+	</record>
+
+    <record id="project_rule_group_qc" model="ir.rule"> 
+		<field name="name">9c Backlog QC</field> 
+		<field name="model_id" ref="model_sprint_backlog" /> 
+		<field name="groups" eval="[(4, ref('project_alda.group_project_qc'))]"/>
+		<field name="domain_force">[('user_id.id', '=', user.id)]</field> 
+	</record>
+
+</odoo>

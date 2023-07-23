@@ -131,21 +131,21 @@
             <form string="Sprint Backlog">
                 <header>
                     <button name="button_confirm" string="Confirm" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'draft')]}" groups="project_alda.group_project_pm"/>
                     <button name="button_delivered" string="Delivered" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}" groups="project_alda.group_project_pm"/>
                     <button name="button_progress" string="On Progress" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', 'not in', ('delivered', 'need_fix'))]}"/>
+                            attrs="{'invisible': [('state', 'not in', ('delivered', 'need_fix'))]}" groups="project_alda.group_project_dev"/>
                     <button name="button_ready_check" string="Ready To Check" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'progress')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'progress')]}" groups="project_alda.group_project_dev"/>
                     <button name="button_qc" string="QC" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'ready_check')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'ready_check')]}" groups="project_alda.group_project_qc"/>
                     <button name="button_need_fix" string="Need Fix" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'qc')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'qc')]}" groups="project_alda.group_project_qc"/>
                     <button name="button_done" string="Done" type="object" class="btn-primary"
-                            attrs="{'invisible': [('state', '!=', 'qc')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'qc')]}" groups="project_alda.group_project_qc"/>
                     <button name="button_cancel" string="Cancel" type="object"
-                            attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
+                            attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}" groups="project_alda.group_project_pm"/>
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -164,7 +164,7 @@
                             <field name="task_title" attrs="{'readonly':[('state', '!=', 'draft')]}" required="1"/>
                             <field name="task_description" attrs="{'readonly':[('state', '!=', 'draft')]}" required="1"/>
                             <field name="is_auto" readonly="1" invisible="1" />
-                            <field name="state2" readonly="1" />
+                            <field name="state2" readonly="1" invisible="1"/>
                         </group>
                         <group>
                             <field name="modul" attrs="{'readonly':[('state', '!=', 'draft')]}" required="1"/>
@@ -193,6 +193,16 @@
         <field name="search_view_id" ref="sprint_backlog_search" />
         <field name="view_id" ref="sprint_backlog_kanban" />
         <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"create": True, "edit": True, "delete": True}</field>
+    </record>
+
+    <record id="sprint_backlog_action_view" model="ir.actions.act_window">
+        <field name="name">Sprint Backlog</field>
+        <field name="res_model">sprint.backlog</field>
+        <field name="search_view_id" ref="sprint_backlog_search" />
+        <field name="view_id" ref="sprint_backlog_kanban" />
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{"create": False, "edit": False, "delete": False}</field>
     </record>
 
     <menuitem
@@ -200,5 +210,14 @@
         name="Sprint Backlog"
         action="sprint_backlog_action"
         parent="project.menu_main_pm"
-        sequence="5"/>
+        sequence="5"
+        groups="project_alda.group_project_pm"/>
+
+    <menuitem
+        id="sprint_backlog_menu_view"
+        name="Sprint Backlog"
+        action="sprint_backlog_action_view"
+        parent="project.menu_main_pm"
+        sequence="5"
+        groups="project_alda.group_project_dev,project_alda.group_project_qc"/>
 </odoo>
