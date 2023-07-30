@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <data>
+        <record id="paperformat_A4" model="report.paperformat">
+            <field name="name">A4</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">25.7</field>
+            <field name="margin_bottom">32</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">73</field>
+        </record>
+
+        <record id="action_report_project" model="ir.actions.report">
+            <field name="name">SK Project</field>
+            <field name="model">project.projects</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">project_alda.report_project</field>
+            <field name="report_file">project_alda.report_project</field>
+            <field name="paperformat_id" ref="project_alda.paperformat_A4"/>
+            <field name="print_report_name">('PROJECT - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="model_project_projects"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_pb" model="ir.actions.report">
+            <field name="name">Laporan Product Backlog</field>
+            <field name="model">product.backlog</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">project_alda.report_product_backlog</field>
+            <field name="report_file">project_alda.report_product_backlog</field>
+            <field name="paperformat_id" ref="project_alda.paperformat_A4"/>
+            <field name="print_report_name">('PRODUCT BACKLOG - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="model_product_backlog"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_sp" model="ir.actions.report">
+            <field name="name">Laporan Sprint Planning</field>
+            <field name="model">sprint.planning</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">project_alda.report_sp</field>
+            <field name="report_file">project_alda.report_sp</field>
+            <field name="paperformat_id" ref="project_alda.paperformat_A4"/>
+            <field name="print_report_name">('SPRINT PLANNING - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="model_sprint_planning"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_sb" model="ir.actions.report">
+            <field name="name">Laporan Sprint Backlog</field>
+            <field name="model">sprint.backlog</field>
+            <field name="report_type">qweb-html</field>
+            <field name="report_name">project_alda.report_sb</field>
+            <field name="report_file">project_alda.report_sb</field>
+            <field name="paperformat_id" ref="project_alda.paperformat_A4"/>
+            <field name="print_report_name">('SPRINT BACKLOG - %s' % (object.name))</field>
+            <field name="binding_model_id" ref="model_sprint_backlog"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+</odoo>

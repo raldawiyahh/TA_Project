@@ -1,6 +1,7 @@
 from odoo import api, fields, models, _
 import pytz
 from datetime import datetime
+from odoo.exceptions import UserError, ValidationError
 
 class SprintBacklog(models.Model):
     _name = 'sprint.backlog'
@@ -38,6 +39,8 @@ class SprintBacklog(models.Model):
             # Add more colors as needed
         ], string='Color', default='blue')
     is_calculate = fields.Boolean("is_calculate")
+    date_today = fields.Date(string="Date Today", default=fields.Date.today())
+    pm_id = fields.Many2one('res.users', string="Project Manager", related="project_id.pm_id")
 
     @api.model_create_multi
     def create(self, vals_list):

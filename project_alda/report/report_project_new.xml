@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Define the paper format -->
+        <record id="jidoka_kojima_mo_barcode_product_paperformat" model="report.paperformat">
+            <field name="name">Jidoka Kojima Paperformat - Product Barcode Label</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+		<template id="report_jidoka_kojima_mo_barcode_product_document">
+			<t t-call="web.basic_layout">
+				<div class="page" >
+					<t t-foreach="docs" t-as="o">
+						<t t-set="repeat_count" t-value="3"/>
+						<t t-set="repeated_docs" t-value="[o] * repeat_count"/>
+						<t t-foreach="repeated_docs" t-as="doc">
+							<table class="table-borderless" style="width: 100% !important;" auto_resize="1">
+								<tr>
+									<td style="width: 50% !important;"> 
+										<div style="padding-right: 15px !important; padding-left: 15px !important; padding-top: 25px !important; width:100%; float: left;">
+											<table style="border: 1px solid; border-collapse: collapse; width:100% !important; padding: 3px; page-break-inside: avoid;" auto_resize="1">
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:7mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding:3px; height:7mm;" colspan="3" class="text-center">
+														<img src="/project_alda/static/src/image/logo_kojima.jpeg" style="width:60%;height:7mm;"/>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:7mm;" colspan="9" class="text-center">
+														<b>PT KOJIMA AUTO TECHNOLOGY INDONESIA</b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:50mm;">
+													<t t-if="o.regular_code and not o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="12" class="text-center">
+															<b>REGULAR</b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code or not o.regular_code and o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="12" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="4" class="text-center">
+															<b>REGULAR</b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="8" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>REGULAR</b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and not o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>REGULAR</b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-else="">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="12" class="text-center">
+															<b> </b>
+														</td>
+													</t>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:12mm; width:50mm;">
+													<t t-if="o.regular_code and not o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code2 and not o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code and o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="4" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="4" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="4" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and not o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-else="">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b> </b>
+														</td>
+													</t>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm;" colspan="12" class="text-center">
+														<string>PART NO</string>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:6mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 18px !important; padding: 3px; height:6mm; width:95%;" colspan="11" class="text-center">
+														<b><t t-if="o.product_id.part_number" t-esc="o.product_id.part_number[:22]"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 22px !important; padding: 3px; height:6mm; width:5%;" colspan="1" class="text-center">
+														<b><t t-if="o.no_additional" t-esc="o.no_additional[:5]"/></b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:95%;" colspan="11" class="text-center">
+														<string>PART NAME</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:5%;" colspan="1" class="text-center">
+														<string>MODEL</string>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:10mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:10mm; width:95%;" colspan="11" class="text-center">
+														<b><t t-if="o.product_id.name" t-esc="o.product_id.name[:55]"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 26px !important; padding: 3px; height:10mm; width:5%;" colspan="1" class="text-center">
+														<b><t t-if="o.model" t-esc="o.model[:5]"/></b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50%;" colspan="6" class="text-center">
+														<string>QTY</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50%;" colspan="6" class="text-center">
+														<string>SIDE</string>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:8mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 28px !important; padding: 3px; height:8mm; width:50%;" colspan="6" class="text-center">
+														<string><t t-if="o.product_qty" t-esc="o.product_qty"/> <t t-if="o.product_id.uom_id.name" t-esc="o.product_id.uom_id.name"/></string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 28px !important; padding: 3px; height:8mm; width:50%;" colspan="6" class="text-center">
+														<b><t t-if="o.side" t-esc="o.side[:5]"/></b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:51%;" colspan="6" class="text-center">
+														<string>PROD DATE</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:49%;" colspan="6" class="text-center">
+														<string>SHIFT</string>
+													</td>
+													
+													
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:5mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b><t t-if="o.production_date" t-esc="o.production_date.strftime('%d')"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b><t t-if="o.production_date" t-esc="o.production_date.strftime('%b')"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b><t t-if="o.production_date" t-esc="o.production_date.strftime('%Y')"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:25%;" colspan="2" class="text-center">
+														<b>1</b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:25%;" colspan="2" class="text-center">
+														<b>2</b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:20%;" colspan="2" class="text-center">
+														<b>3</b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:33%;" colspan="4" class="text-center">
+														<string>QC CHECK</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:33%;" colspan="4" class="text-center">
+														<string>PROD CHECK</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:15mm; width:33%%;" colspan="4" rowspan="2" class="text-center">
+														<img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.product_id.barcode, 60, 60)"/>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:12mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:12mm; width:33%;" colspan="4" class="text-center">
+														<b></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:12mm; width:33%;" colspan="4" class="text-center">
+														<b></b>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</td>
+									<td style="width: 50% !important;"> 
+										<div style="padding-right: 15px !important; padding-left: 15px !important; padding-top: 25px !important; width:100%; float: left;">
+											<table style="border: 1px solid; border-collapse: collapse; width:100% !important; padding: 3px; page-break-inside: avoid;" auto_resize="1">
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:7mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding:3px; height:7mm;" colspan="3" class="text-center">
+														<img src="/project_alda/static/src/image/logo_kojima.jpeg" style="width:60%;height:7mm;"/>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:7mm;" colspan="9" class="text-center">
+														<b>PT KOJIMA AUTO TECHNOLOGY INDONESIA</b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:50mm;">
+													<t t-if="o.regular_code and not o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="12" class="text-center">
+															<b>REGULAR</b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code or not o.regular_code and o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="12" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="4" class="text-center">
+															<b>REGULAR</b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="8" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>REGULAR</b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and not o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>REGULAR</b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="6" class="text-center">
+															<b>PACKING</b>
+														</td>
+													</t>
+													<t t-else="">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50mm;" colspan="12" class="text-center">
+															<b> </b>
+														</td>
+													</t>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:12mm; width:50mm;">
+													<t t-if="o.regular_code and not o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code2 and not o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="not o.regular_code and o.packing_code and o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="4" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="4" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="4" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code and not o.packing_code2">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code" t-esc="o.packing_code[:5]"/></b>
+														</td>
+													</t>
+													<t t-elif="o.regular_code and o.packing_code2 and not o.packing_code">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.regular_code" t-esc="o.regular_code[:5]"/></b>
+														</td>
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="6" class="text-center">
+															<b><t t-if="o.packing_code2" t-esc="o.packing_code2[:5]"/></b>
+														</td>
+													</t>
+													<t t-else="">
+														<td style="border: 1px solid; border-collapse: collapse; font-size: 34px !important; padding: 3px; height:12mm; width:50mm;" colspan="12" class="text-center">
+															<b> </b>
+														</td>
+													</t>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm;" colspan="12" class="text-center">
+														<string>PART NO</string>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:6mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 18px !important; padding: 3px; height:6mm; width:95%;" colspan="11" class="text-center">
+														<b><t t-if="o.product_id.part_number" t-esc="o.product_id.part_number[:22]"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 22px !important; padding: 3px; height:6mm; width:5%;" colspan="1" class="text-center">
+														<b><t t-if="o.no_additional" t-esc="o.no_additional[:5]"/></b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:95%;" colspan="11" class="text-center">
+														<string>PART NAME</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:5%;" colspan="1" class="text-center">
+														<string>MODEL</string>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:10mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:10mm; width:95%;" colspan="11" class="text-center">
+														<b><t t-if="o.product_id.name" t-esc="o.product_id.name[:55]"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 26px !important; padding: 3px; height:10mm; width:5%;" colspan="1" class="text-center">
+														<b><t t-if="o.model" t-esc="o.model[:5]"/></b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50%;" colspan="6" class="text-center">
+														<string>QTY</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:50%;" colspan="6" class="text-center">
+														<string>SIDE</string>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:8mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 28px !important; padding: 3px; height:8mm; width:50%;" colspan="6" class="text-center">
+														<string><t t-if="o.product_qty" t-esc="o.product_qty"/> <t t-if="o.product_id.uom_id.name" t-esc="o.product_id.uom_id.name"/></string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 28px !important; padding: 3px; height:8mm; width:50%;" colspan="6" class="text-center">
+														<b><t t-if="o.side" t-esc="o.side[:5]"/></b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:51%;" colspan="6" class="text-center">
+														<string>PROD DATE</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:49%;" colspan="6" class="text-center">
+														<string>SHIFT</string>
+													</td>
+													
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:5mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b><t t-if="o.production_date" t-esc="o.production_date.strftime('%d')"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b><t t-if="o.production_date" t-esc="o.production_date.strftime('%b')"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b><t t-if="o.production_date" t-esc="o.production_date.strftime('%Y')"/></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:22%;" colspan="2" class="text-center">
+														<b>1</b>
+														
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:22%;" colspan="2" class="text-center">
+														<b>2</b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 16px !important; padding: 3px; height:5mm; width:17%;" colspan="2" class="text-center">
+														<b>3</b>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:3mm; width:100%;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:33%;" colspan="4" class="text-center">
+														<string>QC CHECK</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:3mm; width:33%;" colspan="4" class="text-center">
+														<string>PROD CHECK</string>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:15mm; width:33%%;" colspan="4" rowspan="2" class="text-center">
+														<img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.product_id.barcode, 60, 60)"/>
+													</td>
+												</tr>
+												<tr style="border: 1px solid; border-collapse: collapse; padding: 3px; height:12mm;">
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:12mm; width:33%;" colspan="4" class="text-center">
+														<b></b>
+													</td>
+													<td style="border: 1px solid; border-collapse: collapse; font-size: 12px !important; padding: 3px; height:12mm; width:33%;" colspan="4" class="text-center">
+														<b></b>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</td>
+								</tr>
+							</table>
+							
+						</t>
+					</t>
+				</div>
+			</t>
+		</template>
+
+		
+
+        <!-- Define the report action -->
+        <record id="action_report_kojima_mo_product_barcode" model="ir.actions.report">
+            <field name="name">Product Barcode Label Kojima</field>
+            <field name="model">print.barcode.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">project_alda.report_jidoka_kojima_mo_barcode_product_document</field>
+            <field name="report_file">project_alda.report_jidoka_kojima_mo_barcode_product_document</field>
+            <field name="print_report_name">'MO Box Barcode Kojima'</field>
+            <field name="paperformat_id" ref="jidoka_kojima_mo_barcode_product_paperformat"/>
+        </record>
+
+    </data>
+</odoo>

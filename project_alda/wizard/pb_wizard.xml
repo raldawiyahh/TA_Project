@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>  
+    <data>
+        <!-- Form untuk memilih project -->
+        <record id="pb_report_wizard_form" model="ir.ui.view">
+            <field name="name">Product Backlog Report</field>
+            <field name="model">pb.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Product Backlog Report">
+                    <group>
+                        <group>
+                            <field name="project_no" required="1"/>
+                            <field name="project_name" readonly="1"/>
+                        </group>
+                    </group>
+                    <footer>                        
+                        <button name="action_print_excel" string="Print (Xlsx)" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record> 
+ 
+        <!-- Action untuk membuka form diatas -->
+        <record model="ir.actions.act_window" id="action_pb_report_wizard_form">
+            <field name="name">Product Backlog Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pb.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref=""/>
+        </record>
+
+        <menuitem id="menu_reporting" name="Reporting" parent="project.menu_main_pm" sequence="60"/>
+        <menuitem id="menu_pb_wizard" name="Product Backlog Report" action="action_pb_report_wizard_form" parent="menu_reporting" sequence="1"/>
+    
+        <record id="pb_xlsx" model="ir.actions.report">
+            <field name="name">Product Backlog Report Excel</field>
+            <field name="model">pb.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">project_alda.pb_xlsx</field>
+            <field name="report_file">Product Backlog Report</field>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

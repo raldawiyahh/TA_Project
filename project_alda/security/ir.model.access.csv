@@ -6,3 +6,4 @@ access_sprint_planning_user,project_alda.sprint.planning,model_sprint_planning,b
 access_sprint_evaluating_user,project_alda.sprint.evaluating,model_sprint_evaluating,base.group_user,1,1,1,1
 access_sprint_backlog_user,project_alda.sprint.backlog,model_sprint_backlog,base.group_user,1,1,1,1
 access_task_wizard_user,project_alda.task.wizard,model_task_wizard,base.group_user,1,1,1,1
+access_pb_report_wizard_user,project_alda.pb.report.wizard,model_pb_report_wizard,base.group_user,1,1,1,1

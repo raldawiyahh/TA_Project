@@ -86,6 +86,8 @@
                             <field name="persen" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </div>
                         <field name="is_auto" readonly="1" invisible="1"/>
+                        <field name="date_today" readonly="1" invisible="1"/>
+                        <field name="pm_id" readonly="1" invisible="1"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

@@ -223,6 +223,8 @@
                             <field name="tl_id" attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
                             <field name="team_id" widget="many2many_tags"  attrs="{'readonly':[('state', '=', 'done')], 'required':[('state', '!=', 'draft')]}"/>
                             <field name="notes" attrs="{'readonly':[('state', '=', 'done')]}"/>
+                            <field name="date_today" invisible="1"/>
+                            <field name="marketing_id" attrs="{'readonly':[('state', '=', 'done')]}"/>
                         </group>
                     </group>
                 </sheet>

@@ -20,6 +20,7 @@ class SprintEvaluating(models.Model):
     evaluating_result = fields.Text(string="Evaluating Result")
     attachment = fields.Binary(string="Attachment")
     se_date = fields.Date(string="Date", required=True, readonly=True, default=fields.Date.today())
+    user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
     
     @api.depends('project_name')
     def _compute_name(self):

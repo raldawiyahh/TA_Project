@@ -21,6 +21,8 @@ class SprintPlanning(models.Model):
     se_count = fields.Integer(string="SE Count", compute="_compute_se_count")
     reality_finished = fields.Date(string="Reality Finished")
     user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user, readonly=True)
+    date_today = fields.Date(string="Date Today", default=fields.Date.today())
+    pm_id = fields.Many2one('res.users', string="Project Manager", related="project_id.pm_id")
 
     # @api.model_create_multi
     # def create(self, vals_list):
@@ -37,7 +39,7 @@ class SprintPlanning(models.Model):
         if duplicates:
             raise ValidationError("This project on the same 'Sprint To' is already exist!")
         elif self.start_sprint > self.end_sprint:
-            raise UserError(_("Start Sprint cannot be bigger than End Sprint")) :
+            raise UserError(_("Start Sprint cannot be bigger than End Sprint")) 
         else :
             self.state='confirm'
 

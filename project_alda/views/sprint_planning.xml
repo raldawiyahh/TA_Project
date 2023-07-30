@@ -82,6 +82,8 @@
                         <field name="sprint_goals" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
                         <field name="reality_finished" readonly="1"/>
                         <field name="is_se" invisible="1"/>
+                        <field name="date_today" invisible="1"/>
+                        <field name="pm_id" invisible="1"/>
                     </group>
                 </sheet>
                 <div class="oe_chatter">

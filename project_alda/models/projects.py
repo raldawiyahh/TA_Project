@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
+from datetime import datetime
 
 class ProjectMockup(models.Model):
     _name = 'project.mockup'
@@ -63,6 +64,8 @@ class ProjectProjects(models.Model):
             ('yellow', 'Yellow'),
             # Add more colors as needed
         ], string='Color', default='blue')
+    date_today = fields.Date(string="Date Today", default=fields.Date.today())
+    marketing_id = fields.Many2one('hr.employee', string="Marketing")
 
     @api.model_create_multi
     def create(self, vals_list):

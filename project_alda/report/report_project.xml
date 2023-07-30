@@ -1,0 +1,163 @@
+<odoo> 
+    <template id="header_session_project">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <div class="header" style="font-family: gotham_book; border: double black;">
+            <table class="table-borderless" style="width: 100% !important;" auto_resize="1">
+                <tr>
+                    <td style="width:15%" class="text-center">
+                        <img src="/project_alda/static/src/image/logo-cic.png" rowspan="4" style="max-height: 150px;"/>
+                    </td>
+                    <td style="width:85%;" class="text-center">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:100%;font-size: 20px !important;" class="text-center">
+                                    <strong>PT CIC CONSULTING</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:100%;font-size: 14px !important;" class="text-center">
+                                    <string><u>Leading in Digital Transformation</u></string>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:100%;font-size: 11px !important;" class="text-center">
+                                    <string>Jl. Kb. Pedes No. 15, Kec. Tanah Sereal, Bogor, Jawa Barat, Indonesia, Kode Pos 12620</string><br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:100%;font-size: 11px !important;" class="text-center">
+                                    <string>Email : contact@cic-integration.co Website : https://cic-integration.co/ Telp : 0251-833-7342</string>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="body_session_project">
+        <div class="page" style="font-family: gotham_book; border: double black; row mt0 mb0; font-size: 13px; padding-left:20px; padding-right:20px;">
+            <tr>
+                <br/><br/>
+                <center><strong><u> SURAT KETERANGAN PROJECT BERJALAN</u></strong></center>
+                    <tr>
+                        <center>NO. <span t-field="o.name"/></center>
+                    </tr>
+            </tr>
+            <br></br>
+            <table class="table table-sm table-bordered" style="padding-left:20px">
+                <tbody>
+                    <tr>
+                        <strong>Kepada Yth: Pimpinan PT CIC Consulting</strong>
+                    </tr>
+                    <br></br><br>
+                        <p>Dengan hormat,</p>
+                        <p>Berikut kami sampaikan bahwa project di bawah ini sudah dikonfirmasi dan segera dilaksanakan. Untuk kemudian saya serahkan kepada manajer proyek terkait.
+                            Adapun detail project yang dimaksud yaitu sebagai berikut :</p>
+                    </br>
+                    <tr>
+                        <td style="width: 250px">
+                            <string>Nama Proyek</string>
+                        </td>
+                        <td>
+                            <span t-field="o.project_name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <string>Nama Pelanggan</string>
+                        </td>
+                        <td>
+                            <span t-field="o.customer_id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <string>Tanggal Proyek</string>
+                        </td>
+                        <td>
+                            <span t-field="o.start_pro"/>
+                            <string> - </string>
+                            <span t-field="o.end_pro"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <string>Nama PIC Customer</string>
+                        </td>
+                        <td>
+                            <span t-field="o.customer_pic_id"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <string>Project Manager</string>
+                        </td>
+                        <td>
+                            <span t-field="o.pm_id"/>
+                        </td>
+                    </tr>
+                </tbody>
+			</table>
+            <ul class="list-inline">
+                <li>Demikian pemberitahuan ini disampaikan, atas perhatian dan kerjasama Bapak kami ucapkan terima kasih.</li>
+            </ul> 
+                <tr>
+                    <string>Bogor,</string>   
+                    <span t-field="o.date_today"/>
+                </tr>
+                <br></br>
+                <td>
+                    <strong>Sales Marketing</strong>
+                </td>
+                <td><br></br><br></br><br></br><br></br>
+                    <span><u t-field="o.marketing_id"/></span><br></br>
+                    <string>Superintendent</string>   
+                </td>
+                <td><br></br><br></br><br></br>
+                    <string> Tembusan :</string><br>   </br>
+                    <string>1. Yth. Pimpinan PT CIC Consulting</string>   <br></br>
+                    <string>2. Yth. Project Manager</string> <br/>
+                    <string>3. Arsip</string>   
+                </td>
+                <div style="font-size: 11px;">
+                    <string> </string><br/><br/>
+                </div>
+                <div style="font-size: 1px;">
+                    <string> </string><br/>
+                </div>
+        </div>
+    </template>
+    <template id="footer_session_project">
+        <div class="footer" style="font-size: 12px; font-family: gotham_book; border : double black;">
+            <div class="col-12 text-center">
+                <string style="color:#0014ff;" ><i>Leading in Digital Transformation</i></string> 
+            </div>
+        </div>
+    </template>
+
+    <template id="report_project">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div t-if="report_type == 'html'">
+                        <t t-call="project_alda.header_session_project"/>
+                        <t t-call="project_alda.body_session_project"/>
+                        <t t-call="project_alda.footer_session_project"/>
+                </div>
+                <div t-else="">
+                    <t t-call="project_alda.header_session_project"/>
+                    <t t-call="web.external_layout">
+                        <t t-call="project_alda.body_session_project"/>
+                        <t t-call="project_alda.footer_session_project"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

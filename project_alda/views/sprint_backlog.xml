@@ -181,6 +181,8 @@
                             <field name="task_priority" readonly="1"/>
                             <field name="assignees_ids" widget="many2many_tags" attrs="{'readonly':[('state', 'not in', ('draft', 'confirm'))], 'required':[('state', '!=', 'draft')]}"/>
                             <field name="submission_date" readonly="1"/>
+                            <field name="date_today" invisible="1"/>
+                            <field name="pm_id" invisible="1"/>
                         </group>
                     </group>
                 </sheet>
